@@ -1,4 +1,6 @@
 class Printer:
+    instance = None
+
     def __init__(self, model, type, isColor, isDuplex, paperTrayCapacity, paperCount):
         self.model = model
         self.type = type
@@ -22,9 +24,14 @@ class Printer:
             self.paperCount += count
             print(f"Loaded {count} sheets of paper. Total paper count: {self.paperCount}")
 
-printer = Printer("HP LaserJet", "лазерний", False, True, 100, 50)
+    @staticmethod
+    def getInstance():
+        if not Printer.instance:
+            Printer.instance = Printer("HP LaserJet", "лазерний", False, True, 100, 50)
+        return Printer.instance
+
+printer = Printer.getInstance()
 
 printer.print(10)
 
 printer.loadPaper(50)
-
